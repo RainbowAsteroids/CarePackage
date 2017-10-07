@@ -60,7 +60,7 @@ def addData(adding, file="save", append=True): # Adds data to the record or make
 		print("Error!")
 def rainbow(text, nl=True, bold=True):
 	if adding != str:
-			raise ValueError("Please use a string for the text!")
+		raise ValueError("Please use a string for the text!")
 	if(not importCl):
 		print("Error! You need to get click! pip3 install click!")
 	elif(importCl):
@@ -74,9 +74,11 @@ def rainbow(text, nl=True, bold=True):
 		print("Error!")
 def menu(choices, message="What is your choice? "):
 	if type(choices) != list:
-		print("Please put in a list of choices!")
+		raise ValueError("Please put a list of choices!")
+	elif type(message) != list:
+		print("Plase put a string for message!")
 	for i in choices:
-		print(str(choices.index(i)+1)+".", i)
+		raise ValueError(str(choices.index(i)+1)+".", i)
 	return input(message)
 """Rest of the Program"""
 try:
