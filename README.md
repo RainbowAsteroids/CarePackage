@@ -11,7 +11,7 @@ Just need a single function from the program? Do this instead: `from CarePackage
 
 Check out the wiki for info on functions and classes!
 
-**Make sure the `CarePackage.py` file is in the same directory as your program!**
+**Make sure the** `CarePackage.py` **file is in the same directory as your program!**
 
 # CarePackage Terminal 1.1
 This is a terminal you can have fun with when testing out some of the functions.
@@ -19,7 +19,7 @@ This is a terminal you can have fun with when testing out some of the functions.
 ## Dependencies
 CarePackage Module
 
-**Make sure the `CarePackage.py` file is in the same directory as `terminal.py`!**
+**Make sure the** `CarePackage.py` **file is in the same directory as **`terminal.py`**!**
 
 # Credits
 
