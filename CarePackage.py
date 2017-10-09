@@ -1,4 +1,4 @@
-"Optional Imports"
+"""Optional Imports""""
 importCl = True
 importCo = True
 try:
@@ -9,18 +9,65 @@ try:
 	import coinmarketcap
 except ModuleNotFoundError:
 	importCo = False
-"Imports"
+"""Imports"""
 import os
 import random
 import sys
-"Varibles"
+import hashlib
+import binascii
+"""Varibles"""
 colors = ["red", "green", "yellow", "blue"]
-"Functions"
+flag = sys.argv[1:]
+"""Classes"""
+class hasher: # Upon request of Dylan Hamer, I am making this class. This class is about hashing your data and passwords
+	def hashing(data): # Good for hashing files or strings
+		if type(data) != str: # Makes sure the input data is indeed a string
+			raise ValueError("Please use a string for inputted data!")
+		return {"md5":hashlib.md5(bytes(data, "UTF-8")), "sha1":hashlib.sha1(bytes(data, "UTF-8")), "sha256":hashlib.sha256(bytes(data, "UTF-8")), "sha512":hashlib.sha512(bytes(data, "UTF-8"))}
+	def printout(data): # Prints out hashed strings or data
+		hashes = hasher.hashing(data)
+		print("MD5:", hashes["md5"])
+		print("SHA1:", hashes["sha1"])
+		print("SHA256:", hashes["sha256"])
+		print("SHA512:", hashes["sha512"])
+	class password: # Password part of the hasher class
+		def make(password, salt=None, saltSpecific=False): # Hashes and salts passwords
+			if type(password) != str:
+				raise ValueError("Please make passwords strings only")
+			if not saltSpecific:
+			  salt = str(binascii.hexlify(os.urandom(64)))
+			password = str(binascii.hexlify(hashlib.pbkdf2_hmac('sha512', bytes(password, 'UTF-8'), salt, 1000000)), "UTF-8")
+			return [password, str(salt, "UTF-8")]
+		def save(username, password): # Saves passwords, salts, and usernames.
+			if type(username) != str:
+				raise ValueError("Please make usernames strings only")
+			passfile = open("passwords/"+username+".txt", "r+") # Opens files for storing login data
+			saltfile = open("salts/"+username+".txt", "r+")
+			passnsalt = hasher.password.make(password) # Gets password hash and salt
+			password = passnsalt[0]
+			salt = passnsalt[1]
+			userfile.write(username) # Saves username, password hash, and salt
+			userfile.close()
+			passfile.write(password)
+			passfile.close()
+			saltfile.write(salt)
+			saltfile.close()
+		def checkAccount(username):
+			if type(username) != str:
+				raise ValueError("Please make usernames strings only")
+			return os.path.isfile("password/"+username+".txt")
+		def login(username, password):
+		  password = open("passwords/"+username+".txt", "r")
+		  salt = open("salts/"+username+".txt", "r")
+		  check = hasher.password.make(password, bytes(salt.read(), "UTF-8"), True)[0]
+		  return password.read() == str(check, "UTF-8")
+		  
+"""Functions"""
 def version():
 	CarePackage.rainbow("CarePackage Terminal: 1.0")
 	CarePackage.rainbow("CarePackage Module: 1.1")
 def loadData(file="save"): # Load text files, line by line
-	if file != str:
+	if type(file) != str:
 		raise ValueError("Please use a string for the file name!")
 	data = open(file+".txt", "r") # Opens up save file
 	x = []
@@ -35,10 +82,10 @@ def loadData(file="save"): # Load text files, line by line
 def clearScreen(): # Clears the screen
 	os.system('cls' if os.name == 'nt' else 'clear')
 def addData(adding, file="save", append=True): # Adds data to the record or makes a new record
-	if file != str:
+	if type(file) != str:
 		raise ValueError("Please use a string for the file name!")
 	if(append):
-		if adding != str:
+		if type(adding) != str:
 			raise ValueError("Please use a string for the adding!")
 		data = open(file+".txt", "r+") # Opens data file
 		x = loadData() # Gets the data pre record
@@ -47,7 +94,7 @@ def addData(adding, file="save", append=True): # Adds data to the record or make
 		data.write(adding) # Writes new data
 		data.close # Closes file
 	elif(not append):
-		if adding != list:
+		if type(adding) != list:
 			raise ValueError("Please use a list for the adding!")
 		data = open(file+".txt", "r+") # Opens data file
 		x = adding[-1] # Gets the last thing in the data
@@ -59,8 +106,8 @@ def addData(adding, file="save", append=True): # Adds data to the record or make
 	else:
 		print("Error!")
 def rainbow(text, nl=True, bold=True):
-	if adding != str:
-		raise ValueError("Please use a string for the text!")
+	if type(adding) != str:
+			raise ValueError("Please use a string for the text!")
 	if(not importCl):
 		print("Error! You need to get click! pip3 install click!")
 	elif(importCl):
@@ -72,22 +119,29 @@ def rainbow(text, nl=True, bold=True):
 		click.secho(x, bold=bold, nl=nl, fg=random.choice(colors))
 	else:
 		print("Error!")
-def menu(choices, message="What is your choice? "):
+def menu(choices, message="What is your choice? ", exit=False):
 	if type(choices) != list:
-		raise ValueError("Please put a list of choices!")
-	elif type(message) != list:
-		print("Plase put a string for message!")
+		print("Please put in a list of choices!")
 	for i in choices:
-		raise ValueError(str(choices.index(i)+1)+".", i)
-	return input(message)
+		print(str(choices.index(i)+1)+".", i)
+	if exit:
+		print("0. Exit")
+	try:
+		choice = int(input(message))
+	except:
+		print("Please input a number.")
+	if choice in range(len(choices)):
+		return choice
+	else:
+		print("Invalid Option!!!")
 """Rest of the Program"""
 try:
-  if sys.argv[1] == "-v" or "--version":
-	  if importCl:
-		  rainbow("CarePackage Terminal: 1.0")
-		  rainbow("CarePackage Module: 1.1")
-	  else:
-		  print("CarePackage Terminal: 1.0")
-		  print("CarePackage Module: 1.1")
+	if sys.argv[1] == "-v" or "--version":
+		if importCl:
+			rainbow("CarePackage Terminal: 1.0")
+			rainbow("CarePackage Module: 1.1")
+		else:
+			print("CarePackage Terminal: 1.0")
+			print("CarePackage Module: 1.1")
 except:
-  pass
+	pass
