@@ -19,7 +19,7 @@ This is a terminal you can have fun with when testing out some of the functions.
 ## Dependencies
 CarePackage Module
 
-**Make sure the** `CarePackage.py` **file is in the same directory as **`terminal.py`**!**
+**Make sure the** `CarePackage.py` **file is in the same directory as** `terminal.py` **!**
 
 # Credits
 
