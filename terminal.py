@@ -4,40 +4,54 @@ import os
 """Classes"""
 class login:
 	def create():
-		while True:
-			username = input("What do you want your username to be? ")
-			if CarePackage.hasher.password.checkAccount(username):
+		skip = False
+		while not skip:
+			username = input("What do you want your username to be? (Type \"exit\" to exit) ")
+			if username == "exit":
+				skip = True
+			elif CarePackage.hasher.password.checkAccount(username):
 				print("Error! That username is taken!")
 			else:
 				break
-		CarePackage.hasher.password.save(username, input("What do you want your password to be? "))
-		CarePackage.clearScreen()
+		if not skip:
+			CarePackage.hasher.password.save(username, input("What do you want your password to be? "))
+			CarePackage.clearScreen()
 	def signin():
-		while True:
-			username = input("What is your username? ")
-			if CarePackage.hasher.password.checkAccount(username):
+		skip = False
+		while not skip:
+			username = input("What is your username? (Type \"exit\" to exit) ")
+			if username == "exit":
+				skip = True
+			elif CarePackage.hasher.password.checkAccount(username):
 				break
 			else:
 				print("Error! That user does not exist!")
-		while True:
-			password = input("What is your password? ")
+		while not skip:
+			password = input("What is your password? (Type \"exit\" to exit) ")
 			CarePackage.clearScreen()
-			if CarePackage.hasher.password.login(username, password):
+			if password == "exit":
+				skip = True
+			elif CarePackage.hasher.password.login(username, password):
 				print("Welcome", username+"!")
 				break
 			else:
 				print("Error! Wrong password!")
 	def delete():
-		while True:
-			username = input("What is your username? ")
-			if CarePackage.hasher.password.checkAccount(username):
+		skip = False
+		while not skip:
+			username = input("What is your username? (Type \"exit\" to exit) ")
+			if username == "exit":
+				skip = True
+			elif CarePackage.hasher.password.checkAccount(username):
 				break
 			else:
 				print("Error! That user does not exist!")
-		while True:
-			password = input("What is your password? ")
+		while not skip:
+			password = input("What is your password? (Type \"exit\" to exit) ")
 			CarePackage.clearScreen()
-			if CarePackage.hasher.password.login(username, password):
+			if password == "exit":
+				skip = True
+			elif CarePackage.hasher.password.login(username, password):
 				os.remove("passwords/"+username+".txt")
 				os.remove("salts/"+username+".txt")
 				break
@@ -51,12 +65,18 @@ def commandHandler(command):
 	elif command[0] == "version":
 		version()
 	elif command[0] == "rainbow":
-		CarePackage.rainbow(command[1])
+	  try:
+		  CarePackage.rainbow(command[1])
+		except IndexError:
+		  print("Usage: rainbow [TEXT]")
 	elif command[0] == "hash":
-		if command[1] == "file":
-			CarePackage.hasher.printout(open(command[2]).read())
-		elif command[1] == "string":
-			CarePackage.hasher.printout(command[2])
+	  try:
+		  if command[1] == "file":
+			  CarePackage.hasher.printout(open(command[2]).read())
+		  elif command[1] == "string":
+			  CarePackage.hasher.printout(command[2])
+	  except IndexError:
+	    print("Usage: hash <file/string> [FILENAME/TEXT]")
 	elif command[0] == "login":
 		loginMode()
 	elif command[0] == "signoff":
