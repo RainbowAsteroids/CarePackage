@@ -67,7 +67,7 @@ def commandHandler(command):
 	elif command[0] == "rainbow":
 	  try:
 		  CarePackage.rainbow(command[1])
-		except IndexError:
+	  except IndexError:
 		  print("Usage: rainbow [TEXT]")
 	elif command[0] == "hash":
 	  try:
