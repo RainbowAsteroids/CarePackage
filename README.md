@@ -19,13 +19,5 @@ CarePackage Module
 
 **Make sure the** `CarePackage.py` **file is in the same directory as** `terminal.py` **!**
 
-# Credits
-
-Dylan Hamer - Asked for hashing
-
-_Wanna be here? Make a pull request or send requests to my email!_
-
-_rainbowasteroids@protonmail.com_
-
 # Check out the wiki for info on functions and classes!
 
