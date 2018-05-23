@@ -138,10 +138,7 @@ def cmd(pipe=False, command):
 try:
 	if sys.argv[1] == "-v" or "--version":
 		if importCl:
-			rainbow("CarePackage Terminal: 1.0")
+			rainbow("CarePackage Terminal: 1.1.1")
 			rainbow("CarePackage Module: 1.2.2")
-		else:
-			print("CarePackage Terminal: 1.0")
-			print("CarePackage Module: 1.2.2")
 except:
 	pass
