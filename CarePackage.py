@@ -1,19 +1,22 @@
-"""Optional Imports"""
-importCl = True
-importCo = True
-try:
-	import click
-except:
-	importCl = False
 """Imports"""
 import os
 import random
 import sys
 import hashlib
 import binascii
+import subprocess
 """Varibles"""
-colors = ["red", "green", "yellow", "blue"]
+colors = ["red", "green", "yellow", "blue", "pink"]
 flag = sys.argv[1:]
+color = {
+	"red":"\033[91m",
+	"green":"\033[92m",
+	"yellow":"\033[93m",
+	"blue":"\033[96m",
+	"pink":"\033[95m",
+	"grey":"\033[90m",
+	"exit":"\033[0m",
+	"bold":"\033[1m"}
 """Classes"""
 class hasher: # Upon request of Dylan Hamer, I am making this class. This class is about hashing your data and passwords
 	def hashing(data): # Good for hashing files or strings
@@ -55,7 +58,6 @@ class hasher: # Upon request of Dylan Hamer, I am making this class. This class 
 		  salt = open("salts/"+username+".txt", "r")
 		  check = hasher.password.make(password, bytes(salt.read(), "UTF-8"), True)[0]
 		  return passfile.read() == check
-		  
 """Functions"""
 def version():
 	CarePackage.rainbow("CarePackage Terminal: 1.0")
@@ -99,20 +101,19 @@ def addData(adding, file="save", append=True): # Adds data to the record or make
 		data.close # Closes file
 	else:
 		print("Error!")
-def rainbow(text, nl=True, bold=True):
-	if type(text) != str:
-			raise ValueError("Please use a string for the text!")
-	if(not importCl):
-		print("Error! You need to get click! pip3 install click!")
-	elif(importCl):
-		text = list(text)
-		x = text[-1]
-		text.pop(-1)
-		for letter in text:
-			click.secho(letter, bold=bold, nl=False, fg=random.choice(colors))
-		click.secho(x, bold=bold, nl=nl, fg=random.choice(colors))
-	else:
-		print("Error!")
+def rainbow(text, bold=True):
+	text = list(text)
+	x = text[-1]
+	text.pop(-1)
+	y = ""
+	for letter in text:
+		y += style(letter, bold=bold, fg=random.choice(colors))
+	return y
+def style(text, bold=False, fg):
+	if not bold:
+		return color[fg]+text+color["end"]
+	elif bold:
+		return color[fg]+color["bold"]+text+color["end"]
 def menu(choices, message="What is your choice? ", exit=False):
 	if type(choices) != list:
 		print("Please put in a list of choices!")
@@ -128,14 +129,19 @@ def menu(choices, message="What is your choice? ", exit=False):
 		return choice
 	else:
 		print("Invalid Option!!!")
+def cmd(pipe=False, command):
+	if not pipe:
+		os.system(command)
+	else:
+		return subprocess.run(['ls', '-l'], stdout=subprocess.PIPE).stdout
 """Rest of the Program"""
 try:
 	if sys.argv[1] == "-v" or "--version":
 		if importCl:
 			rainbow("CarePackage Terminal: 1.0")
-			rainbow("CarePackage Module: 1.1")
+			rainbow("CarePackage Module: 1.2.2")
 		else:
 			print("CarePackage Terminal: 1.0")
-			print("CarePackage Module: 1.1")
+			print("CarePackage Module: 1.2.2")
 except:
 	pass
