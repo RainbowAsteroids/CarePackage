@@ -133,7 +133,7 @@ def cmd(pipe=False, command):
 	if not pipe:
 		os.system(command)
 	else:
-		return subprocess.run(['ls', '-l'], stdout=subprocess.PIPE).stdout
+		return subprocess.run(command.split(" "), stdout=subprocess.PIPE).stdout
 """Rest of the Program"""
 try:
 	if sys.argv[1] == "-v" or "--version":
