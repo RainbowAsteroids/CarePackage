@@ -129,7 +129,7 @@ def menu(choices, message="What is your choice? ", exit=False):
 		return choice
 	else:
 		print("Invalid Option!!!")
-def cmd(pipe=False, command):
+def cmd(command, pipe=False):
 	if not pipe:
 		os.system(command)
 	else:
