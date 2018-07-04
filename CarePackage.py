@@ -148,4 +148,4 @@ try:
 			rainbow("CarePackage Terminal: 1.1.1")
 			rainbow("CarePackage Module: 1.2.3")
 except:
-	pass
+	pass 
