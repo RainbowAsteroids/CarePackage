@@ -86,12 +86,8 @@ def commandHandler(command):
 	else:
 		print("Error! Command not found!")
 def version():
-	if CarePackage.importCl:
-		CarePackage.rainbow("CarePackage Terminal: 1.0")
-		CarePackage.rainbow("CarePackage Module: 1.1")
-	else:
-		print("CarePackage Terminal: 1.0")
-		print("CarePackage Module: 1.1")
+	CarePackage.rainbow("CarePackage Terminal: 1.1")
+	CarePackage.rainbow("CarePackage Module: 1.2.3")
 def helpText():
 	version()
 	print()
