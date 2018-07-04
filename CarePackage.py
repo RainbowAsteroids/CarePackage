@@ -134,11 +134,18 @@ def cmd(command, pipe=False):
 		os.system(command)
 	else:
 		return subprocess.run(command.split(" "), stdout=subprocess.PIPE).stdout
+def capitalize(string):
+	y = ""
+	string = string.split()
+	string[0] = string[0].capitalize()
+	for x in string:
+		y += x
+	return y
 """Rest of the Program"""
 try:
 	if sys.argv[1] == "-v" or "--version":
 		if importCl:
 			rainbow("CarePackage Terminal: 1.1.1")
-			rainbow("CarePackage Module: 1.2.2")
+			rainbow("CarePackage Module: 1.2.3")
 except:
 	pass
